@@ -4,15 +4,16 @@ import Header from '@/components/Header'
 import Featured from '@/components/Featured'
 import { Product } from '@/models/Product'
 import { mongooseConnect } from '@/lib/mongoose'
+import Productlist from '@/components/Productlist'
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home({products}) {
-  console.log(products);
+export default function Home({product,newProducts}) {
   return (
     <div>
       <Header/>
-      <Featured/>  
+      <Featured product={product}/> 
+      <Productlist newProducts={newProducts}/>
     </div>
 
   )
@@ -21,8 +22,12 @@ export default function Home({products}) {
 export async function getServerSideProps(){
   await mongooseConnect();
   const productId = "6457af7e5490fbce4aaf12d8"
-  const products = await Product.findById(productId);
+  const product = await Product.findById(productId);
+  const newProducts = await Product.find().sort({'_id': -1}).limit(10);
   return {
-    props: {products: JSON.parse(JSON.stringify(products))}
+    props: {product: JSON.parse(JSON.stringify(product)),
+            newProducts: JSON.parse(JSON.stringify(newProducts)),
+      
+    }
   }
 }
