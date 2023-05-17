@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import CartIcon from './CartIcon';
 import PrimaryBtn from './PrimaryBtn';
+import { CartContext } from './CartContext';
 
 const Box = styled.div`
     background-color: white;
@@ -41,7 +42,8 @@ const Price = styled.span`
     padding: 0px;
 `;
 
-const ProductBox = ({title,img,price}) => {
+const ProductBox = ({_id,title,img,price}) => {
+    const {addToCart} = useContext(CartContext);
   return (
     <ProductWrapper>
         <Box>
@@ -52,7 +54,7 @@ const ProductBox = ({title,img,price}) => {
         <DesWrapper>
             <Price>{price && price}$</Price>
             
-            <PrimaryBtn primary outline><CartIcon/></PrimaryBtn>
+            <PrimaryBtn primary outline onClick={()=>addToCart(_id)}><CartIcon/></PrimaryBtn>
         </DesWrapper>
         
     </ProductWrapper>

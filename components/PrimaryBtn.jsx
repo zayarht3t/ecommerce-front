@@ -45,9 +45,10 @@ const Button = styled.button`
     ${ButtonStyle}
 `;
 
+
 const PrimaryBtn = ({children,...res}) => {
   return (
-    <Button {...res}>{children}</Button>
+    <Button {...res} >{children}</Button>
   )
 }
 

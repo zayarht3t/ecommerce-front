@@ -19,11 +19,18 @@ const ProductList = styled.div`
 
 const Title = styled.h2`
     font-weight: bold;
+    margin: 0 auto;
+`;
+
+const TitleWrapper = styled.div`
+    max-width: 800px;
 `;
 const Productlist = ({newProducts}) => {
   return (
     <ProductWrapper>
-        <Title>New Arrivals</Title>
+        <TitleWrapper>
+            <Title>New Arrivals</Title>
+        </TitleWrapper>
         <ProductList>
         {newProducts?.length > 0 &&
             newProducts.map((product) =>(
