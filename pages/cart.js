@@ -88,6 +88,12 @@ const CityHolder = styled.div`
 const cart = () => {
   const {cartProduct,addToCart,removeProduct} = useContext(CartContext);
   const [products,setProducts] = useState([]);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [city, setCity] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [street, setStreet] = useState('');
+  const [country, setCountry] = useState('');
 
   useEffect(()=>{
     if(cartProduct.length > 0) {
@@ -107,6 +113,21 @@ const cart = () => {
   }
 
   let total = 0;
+  const goToPayment = async ()=>{
+    const response = await axios.post('api/checkout',{
+      name,
+      email,
+      city,
+      postalCode,
+      street,
+      country,
+      cartProduct
+    })
+
+    if(response.data.url){
+      window.location.href = response.data.url;
+    }
+  }
   return (
     <>
     <Header/>
@@ -141,7 +162,10 @@ const cart = () => {
 
                   </TableDataCell>
                   <TableDataCell>{cartProduct.filter(p=>p === product._id).length * product.price}</TableDataCell>
-                  {total += cartProduct.filter(p=>p === product._id).length * product.price }
+                  <div style={{display: "none"}}>
+                    {total += cartProduct.filter(p=>p === product._id).length * product.price }
+                  </div>
+                  
                 </tr>
               ))   
               }  
@@ -149,7 +173,7 @@ const cart = () => {
             </Table>
             <LineBreak/>
               <Total>
-                <p>{total}</p>
+                <p>total- {total}</p>
               </Total>          
             </>
 
@@ -165,15 +189,15 @@ const cart = () => {
         </Box>
         <Box>
           <Title>Order Information</Title>
-          <Input type="text" placeholder='Name'/>
-          <Input type="text" placeholder='Email'/>
+          <Input type="text" placeholder='Name' name='name' value={name} onChange={(e)=>setName(e.target.value)}/>
+          <Input type="text" placeholder='Email' name='email' value={email} onChange={(e)=>setEmail(e.target.value)}/>
           <CityHolder>
-          <Input type="text" placeholder='City'/>
-          <Input type="text" placeholder='Postal code'/>
+          <Input type="text" placeholder='City' name='city' value={city} onChange={(e)=>setCity(e.target.value)}/>
+          <Input type="text" placeholder='Postal code' name='postalCode' value={postalCode} onChange={(e)=>setPostalCode(e.target.value)}/>
           </CityHolder>
-          <Input type="text" placeholder='Street Address'/>
-          <Input type="text" placeholder='Country'/>
-          <PrimaryBtn primary>Continue to Payment</PrimaryBtn>
+          <Input type="text" placeholder='Street Address' name='street' value={street} onChange={(e)=>setStreet(e.target.value)}/>
+          <Input type="text" placeholder='Country' name='country' value={country} onChange={(e)=>setCountry(e.target.value)}/>
+          <PrimaryBtn primary onClick={goToPayment}>Continue to Payment</PrimaryBtn>
         </Box>        
       </Wrapper>
     </Center>    
