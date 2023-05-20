@@ -4,6 +4,7 @@ import Center from '@/components/Center';
 import Header from '@/components/Header'
 import PrimaryBtn from '@/components/PrimaryBtn';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
@@ -95,6 +96,8 @@ const cart = () => {
   const [street, setStreet] = useState('');
   const [country, setCountry] = useState('');
 
+
+
   useEffect(()=>{
     if(cartProduct.length > 0) {
       axios.post('api/cart',{ids: cartProduct})
@@ -113,6 +116,8 @@ const cart = () => {
   }
 
   let total = 0;
+
+
   const goToPayment = async ()=>{
     const response = await axios.post('api/checkout',{
       name,
@@ -127,7 +132,49 @@ const cart = () => {
     if(response.data.url){
       window.location.href = response.data.url;
     }
+
   }
+
+  const router = useRouter();
+  const {success} = router.query;
+
+  if(success){
+    return (
+      <>
+      <Header/>
+      <Center>
+        <div>
+        <Box>
+          <div style={{marginTop: 20}}>
+            <h1>Thank you for your order</h1>
+            <p>We'll send to your email when we sent.</p>            
+          </div>
+
+        </Box>          
+        </div>
+      </Center>     
+      </>
+
+
+    )
+  }
+  
+  // if (window?.location?.href?.includes('success')){
+  //   return (
+  //     <>
+  //     <Header>
+  //       <Center>
+  //         <Box>
+  //           <Title>Thank you!</Title>
+  //           <p>We'll send to your email when we sent.</p>
+  //         </Box>
+  //       </Center>
+  //     </Header>      
+  //     </>
+
+  //   )
+  // }
+
   return (
     <>
     <Header/>
