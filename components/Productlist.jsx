@@ -10,7 +10,7 @@ const ProductWrapper = styled.div`
 `;
 
 const ProductList = styled.div`
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr ;

@@ -6,6 +6,8 @@ import { CartContext } from './CartContext';
 
 const StyledHeader = styled.header`
     background-color: #222;
+    top: 0;
+    position: sticky;
 `;
 
 const Logo = styled(Link)`

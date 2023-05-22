@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import CartIcon from './CartIcon';
 import PrimaryBtn from './PrimaryBtn';
 import { CartContext } from './CartContext';
+import Link from 'next/link';
 
 const Box = styled.div`
     background-color: white;
@@ -19,7 +20,10 @@ const Box = styled.div`
     }
 `;
 
-const ProductWrapper = styled.div``;
+const ProductWrapper = styled(Link)`
+    text-decoration: none;
+    color: black;
+`;
 
 const DesWrapper = styled.div`
     display: flex;
@@ -45,7 +49,7 @@ const Price = styled.span`
 const ProductBox = ({_id,title,img,price}) => {
     const {addToCart} = useContext(CartContext);
   return (
-    <ProductWrapper>
+    <ProductWrapper href={`/product/${_id}`}>
         <Box>
             <img src={img ? img[0] : "https://images.unsplash.com/photo-1580522154071-c6ca47a859ad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"} alt="" />
         </Box>
